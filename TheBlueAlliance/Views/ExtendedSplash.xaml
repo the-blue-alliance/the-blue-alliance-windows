@@ -1,0 +1,16 @@
+﻿<Page
+    x:Class="TBA.Views.ExtendedSplash"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TBA.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Canvas>
+            <Image x:Name="extendedSplashImage" Source="ms-appx:///Assets/SplashScreen.png" Width="360"/>
+            <ProgressRing Name="splashProgressRing" IsActive="True" Width="20" HorizontalAlignment="Center"></ProgressRing>
+        </Canvas>
+    </Grid>
+</Page>

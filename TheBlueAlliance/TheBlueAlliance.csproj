@@ -126,6 +126,9 @@
     <Compile Include="Views\Events\EventListing.xaml.cs">
       <DependentUpon>EventListing.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ExtendedSplash.xaml.cs">
+      <DependentUpon>ExtendedSplash.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Landing\OffseasonLanding.xaml.cs">
       <DependentUpon>OffseasonLanding.xaml</DependentUpon>
     </Compile>
@@ -169,6 +172,10 @@
     <Page Include="Views\Events\EventListing.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ExtendedSplash.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Landing\OffseasonLanding.xaml">
       <Generator>MSBuild:Compile</Generator>

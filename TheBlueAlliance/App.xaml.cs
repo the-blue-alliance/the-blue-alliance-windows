@@ -18,15 +18,15 @@ using TBA.DataServices;
 using TBA.Models;
 using SQLite.Net;
 using System.Diagnostics;
+using SQLite.Net.Async;
+using TBA.Views;
+using TBA.Views.Landing;
+using Windows.UI.Core;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
 
 namespace TBA
 {
-    using SQLite.Net.Async;
-    using Views;
-    using Windows.UI.Core;
-
     public class Globals
     {
         public static string APP_ID = "synth3tk:test:v0";
@@ -84,20 +84,19 @@ namespace TBA
 
                 shell.AppFrame.NavigationFailed += OnNavigationFailed;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                if (e.PreviousExecutionState != ApplicationExecutionState.Running)
                 {
-                    //TODO: Load state from previously suspended application
+                    bool loadState = (e.PreviousExecutionState == ApplicationExecutionState.Terminated);
+                    ExtendedSplash extendedSplash = new ExtendedSplash(e.SplashScreen, loadState);
+                    Window.Current.Content = extendedSplash;
                 }
             }
-
-            // Place our app shell in the current Window
-            Window.Current.Content = shell;
 
             if (shell.AppFrame.Content == null)
             {
                 // When the navigation stack isn't restored, navigate to the first page
                 // suppressing the initial entrance animation.
-                shell.AppFrame.Navigate(typeof(Views.Landing.OffseasonLanding), e.Arguments, new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
+                shell.AppFrame.Navigate(typeof(OffseasonLanding), e.Arguments, new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
             }
 
             // Ensure the current window is active
