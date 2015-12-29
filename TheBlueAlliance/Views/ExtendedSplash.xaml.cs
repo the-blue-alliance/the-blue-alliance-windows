@@ -7,8 +7,10 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml.Controls;
+using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
@@ -106,6 +108,16 @@ namespace TBA.Views
 
         async void TestMethod()
         {
+            // Changes the color of the title bar to the brand's colors
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            if (titleBar != null)
+            {
+                Color TBABlue = Color.FromArgb(1, 0, 0, 119);
+                titleBar.ButtonBackgroundColor = TBABlue;
+                titleBar.ButtonForegroundColor = Colors.White;
+                titleBar.BackgroundColor = TBABlue;
+                titleBar.ForegroundColor = Colors.White;
+            }
             await Task.Delay(TimeSpan.FromSeconds(1));
             DismissExtendedSplash();
         }
