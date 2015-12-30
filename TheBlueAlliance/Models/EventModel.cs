@@ -9,11 +9,8 @@ namespace TBA.Models
     // Represents DB tables
     public class EventModel : IEntity<string>
     {
-        [PrimaryKey, AutoIncrement]
-        public int EventPK { get; set; }
-
         [JsonProperty("key")]
-        [Indexed]
+        [Indexed, PrimaryKey]
         public string Key { get; set; }
 
         [JsonProperty("website")]
