@@ -9,10 +9,10 @@ namespace TBA
     class RxEventClient : IEventClient
     {
         private IEventCache Cache { get; set; }
-        private IHttpClient HttpClient { get; set; }
+        private IHttpClient<EventResponse> HttpClient { get; set; }
         private IScheduler Scheduler { get; set; }
 
-        public RxEventClient(IEventCache cache, IHttpClient httpClient, IScheduler scheduler)
+        public RxEventClient(IEventCache cache, IHttpClient<EventResponse> httpClient, IScheduler scheduler)
         {
             Cache = cache;
             HttpClient = httpClient;

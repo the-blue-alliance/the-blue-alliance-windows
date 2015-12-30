@@ -2,6 +2,8 @@
 using SQLite.Net;
 using TBA.Models;
 using System.IO;
+using System;
+using System.Collections.Generic;
 
 namespace TBA.DataServices
 {
@@ -9,23 +11,11 @@ namespace TBA.DataServices
     {
         // Initialize the database
         public static string DBPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "tba.sqlite");
-        private static SQLiteConnection db = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), DBPath);
+        public static SQLiteConnection db = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), DBPath);
 
-        public static SQLiteConnection GetDataStore()
+        public static bool IsPopulated(string table)
         {
-            var EventModelTable = db.GetTableInfo("EventModel");
-
-            if (!EventModelTable.Any())
-            {
-                db.CreateTable<EventModel>();
-            }
-
-            return db;
-        }
-
-        public static bool IsPopulated()
-        {
-            var count = db.ExecuteScalar<int>("SELECT COUNT(*) FROM EventModel LIMIT 0, 1");
+            var count = db.ExecuteScalar<int>("SELECT COUNT(*) FROM ? LIMIT 0, 1", table);
 
             if (count==0)
             {
@@ -39,6 +29,27 @@ namespace TBA.DataServices
         public static void PopulateDB()
         {
 
+        }
+
+        public static void CreateTable<T>(string table)
+        {
+            var _table = db.GetTableInfo(table);
+
+            if (!_table.Any())
+            {
+                db.CreateTable<T>();
+            }
+        }
+
+        public static void InsertBulk<T>(List<T> models)
+        {
+            try
+            {
+                db.InsertAll(models.ToArray());
+            } catch (System.Net.WebException ex)
+            {
+                throw ex;
+            }
         }
     }
 }

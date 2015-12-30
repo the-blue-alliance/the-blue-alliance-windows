@@ -19,6 +19,9 @@ using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics;
+using TBA.DataServices;
+using TBA.Models;
+using System.Collections;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -90,12 +93,14 @@ namespace TBA.Views
         }
 
         // Include code to be executed when the system has transitioned from the splash screen to the extended splash screen (application's first view).
-        void DismissedEventHandler(SplashScreen sender, object e)
+        async void DismissedEventHandler(SplashScreen sender, object e)
         {
-            //await Task.Delay(TimeSpan.FromSeconds(30));
             dismissed = true;
+            DataStoreHelper.CreateTable<EventModel>("EventModel");
 
-            // Complete app setup operations here...
+            EventHttpClient eventHttpClient = new EventHttpClient();
+            EventListResponse events = await eventHttpClient.GetAll();
+            DataStoreHelper.InsertBulk(events.Data);
         }
 
         void DismissExtendedSplash()

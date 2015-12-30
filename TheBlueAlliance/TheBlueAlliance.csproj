@@ -115,7 +115,7 @@
     <Compile Include="DataServices\IEventClient.cs" />
     <Compile Include="DataServices\IHttpClient.cs" />
     <Compile Include="Models\EventModel.cs" />
-    <Compile Include="Models\EventsResponse.cs" />
+    <Compile Include="Models\EventResponse.cs" />
     <Compile Include="Models\ModelComparers.cs" />
     <Compile Include="NavMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

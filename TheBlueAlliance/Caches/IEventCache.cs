@@ -16,7 +16,7 @@ namespace TBA.Caches
     {
         public bool HasCached(string eventKey)
         {
-            List<EventModel> _Event = DataStoreHelper.GetDataStore().Query<EventModel>("SELECT * FROM EventModel WHERE Key = ?", eventKey);
+            List<EventModel> _Event = DataStoreHelper.db.Query<EventModel>("SELECT * FROM EventModel WHERE Key = ?", eventKey);
             
             if (_Event.First() != null)
             {
@@ -31,20 +31,20 @@ namespace TBA.Caches
 
         public EventModel GetCachedItem(string eventKey)
         {
-            EventModel _Event = DataStoreHelper.GetDataStore().Query<EventModel>("SELECT * FROM EventModel WHERE Key = ?", eventKey).FirstOrDefault();
+            EventModel _Event = DataStoreHelper.db.Query<EventModel>("SELECT * FROM EventModel WHERE Key = ?", eventKey).FirstOrDefault();
 
             return _Event;
         }
 
         public void Put(EventModel updatedModel)
         {
-            EventModel _event = DataStoreHelper.GetDataStore().Query<EventModel>("SELECT * FROM EventModel WHERE Key = ?", updatedModel.Key).FirstOrDefault();
+            EventModel _event = DataStoreHelper.db.Query<EventModel>("SELECT * FROM EventModel WHERE Key = ?", updatedModel.Key).FirstOrDefault();
             if (_event == null)
             {
-                DataStoreHelper.GetDataStore().Insert(updatedModel);
+                DataStoreHelper.db.Insert(updatedModel);
                 return;
             }
-            DataStoreHelper.GetDataStore().Update(updatedModel);
+            DataStoreHelper.db.Update(updatedModel);
         }
     }
 }
