@@ -112,8 +112,8 @@
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataServices\DataStoreHelper.cs" />
-    <Compile Include="IEventClient.cs" />
-    <Compile Include="IHttpClient.cs" />
+    <Compile Include="DataServices\IEventClient.cs" />
+    <Compile Include="DataServices\IHttpClient.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\EventsResponse.cs" />
     <Compile Include="Models\ModelComparers.cs" />
