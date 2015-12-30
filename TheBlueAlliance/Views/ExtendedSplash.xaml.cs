@@ -7,9 +7,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.ApplicationModel.Activation;
-using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
@@ -18,10 +16,12 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Reactive.Linq;
 using System.Diagnostics;
 using TBA.DataServices;
 using TBA.Models;
 using System.Collections;
+using Windows.Storage;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -61,7 +61,7 @@ namespace TBA.Views
             
             // Create a Frame to act as the navigation context 
             shell = new AppShell();
-            TestMethod();
+            DismissExtendedSplash();
         }
 
         void PositionImage()
@@ -96,35 +96,35 @@ namespace TBA.Views
         async void DismissedEventHandler(SplashScreen sender, object e)
         {
             dismissed = true;
-            DataStoreHelper.CreateTable<EventModel>("EventModel");
 
-            EventHttpClient eventHttpClient = new EventHttpClient();
-            EventListResponse events = await eventHttpClient.GetAll();
-            DataStoreHelper.InsertBulk(events.Data);
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
+            // Perform setup if this is the first launch
+            if ((bool)localSettings.Values["FirstLaunch"] == true)
+            {
+                DataStoreHelper.CreateTable<EventModel>("EventModel");
+
+                EventHttpClient eventHttpClient = new EventHttpClient();
+                EventListResponse events = await eventHttpClient.GetAll();
+                DataStoreHelper.InsertBulk(events.Data);
+                
+                localSettings.Values["FirstLaunch"] = false; // Flip the first launch flag for subsequent runs
+            }
+            localSettings.Values["LoadingApp"] = false;
         }
 
-        void DismissExtendedSplash()
+        async void DismissExtendedSplash()
         {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            // A bit dirty, but it works for now. Checks the loading setting every second, then continues into the app.
+            while ((bool)localSettings.Values["LoadingApp"] == true)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(1));
+            }
             // Navigate to mainpage
             shell.AppFrame.Navigate(typeof(Landing.OffseasonLanding));
             // Place the frame in the current Window
             Window.Current.Content = shell;
-        }
-
-        async void TestMethod()
-        {
-            // Changes the color of the title bar to the brand's colors
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            if (titleBar != null)
-            {
-                Color TBABlue = Color.FromArgb(1, 0, 0, 119);
-                titleBar.ButtonBackgroundColor = TBABlue;
-                titleBar.ButtonForegroundColor = Colors.White;
-                titleBar.BackgroundColor = TBABlue;
-                titleBar.ForegroundColor = Colors.White;
-            }
-            await Task.Delay(TimeSpan.FromSeconds(1));
-            DismissExtendedSplash();
         }
     }
 }

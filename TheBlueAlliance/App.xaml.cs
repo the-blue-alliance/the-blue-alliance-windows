@@ -22,6 +22,9 @@ using SQLite.Net.Async;
 using TBA.Views;
 using TBA.Views.Landing;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI;
+using Windows.Storage;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
 
@@ -71,6 +74,26 @@ namespace TBA
 #endif
 
             AppShell shell = Window.Current.Content as AppShell;
+
+            // Changes the color of the title bar to the brand's colors
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            if (titleBar != null)
+            {
+                Color TBABlue = Color.FromArgb(1, 0, 0, 119);
+                titleBar.ButtonBackgroundColor = TBABlue;
+                titleBar.ButtonForegroundColor = Colors.White;
+                titleBar.BackgroundColor = TBABlue;
+                titleBar.ForegroundColor = Colors.White;
+            }
+
+            // Initialize a few settings
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            if (!localSettings.Values.ContainsKey("FirstLaunch"))
+            {
+                localSettings.Values.Add("FirstLaunch", true);
+                localSettings.Values.Add("LoadingApp", true);
+            }
+            localSettings.Values["LoadingApp"] = true;
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
