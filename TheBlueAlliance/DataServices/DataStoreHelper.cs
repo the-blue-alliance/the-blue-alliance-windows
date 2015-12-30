@@ -26,11 +26,6 @@ namespace TBA.DataServices
             }
         }
 
-        public static void PopulateDB()
-        {
-
-        }
-
         public static void CreateTable<T>(string table)
         {
             var _table = db.GetTableInfo(table);
