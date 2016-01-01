@@ -16,7 +16,7 @@ namespace TBA
             if (client == null)
             {
                 client = new HttpClient();
-                client.DefaultRequestHeaders.Add("X-TBA-App-Id", "synth3tk:test:v0");
+                client.DefaultRequestHeaders.Add("X-TBA-App-Id", Globals.AppId);
             }
 
             return client;
@@ -32,7 +32,7 @@ namespace TBA
     {
         public Uri uri(string args)
         {
-            Uri _uri = new Uri("http://www.thebluealliance.com/api/v2/" + args);
+            Uri _uri = new Uri(Globals.BaseUrl + args);
             return _uri;
         }
     }

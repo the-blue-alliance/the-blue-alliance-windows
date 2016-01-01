@@ -30,9 +30,20 @@ using Windows.Storage;
 
 namespace TBA
 {
-    public class Globals
+    public static class Globals
     {
-        public static string APP_ID = "synth3tk:test:v0";
+        public static string GetAppVersion()
+        {
+
+            Package package = Package.Current;
+            PackageId packageId = package.Id;
+            PackageVersion version = packageId.Version;
+
+            return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
+
+        }
+        public static string AppId = "the-blue-alliance:windows:v" + GetAppVersion();
+        public static string BaseUrl = "http://www.thebluealliance.com/api/v2/";
     }
 
     /// <summary>
