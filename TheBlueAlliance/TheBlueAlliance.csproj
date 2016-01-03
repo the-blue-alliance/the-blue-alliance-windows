@@ -119,12 +119,14 @@
     <Compile Include="DataServices\IEventClient.cs" />
     <Compile Include="DataServices\IHttpClient.cs" />
     <Compile Include="DataServices\ITeamClient.cs" />
+    <Compile Include="Models\DistrictModels.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\EventResponse.cs" />
     <Compile Include="Models\ModelComparers.cs" />
     <Compile Include="Models\StatusModel.cs" />
     <Compile Include="Models\StatusResponse.cs" />
     <Compile Include="Models\TeamModel.cs" />
+    <Compile Include="Models\DistrictResponse.cs" />
     <Compile Include="Models\TeamResponse.cs" />
     <Compile Include="NavMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,6 +4,8 @@ using Windows.Web.Http;
 using Newtonsoft.Json;
 using TBA.Models;
 using System.Collections.Generic;
+using TBA.DataServices;
+using TBA.Common;
 
 namespace TBA
 {
@@ -142,6 +144,49 @@ namespace TBA
             } while (morePages == true);
 
             return _teamList;
+        }
+    }
+
+    public class DistrictHttpClient : BaseHttpClient
+    {
+        public async Task<EventResponse> Get(string eventKey)
+        {
+            var response = await GetAndDeserialize<EventModel>(uri("event/" + eventKey));
+            EventResponse eventsResponse = new EventResponse();
+
+
+            if (eventsResponse.IsSuccessful = response.Item1 != null)
+            {
+                eventsResponse.Data = response.Item1;
+            }
+            else { eventsResponse.Exception = response.Item2; }
+            return eventsResponse;
+        }
+
+        public async Task<DistrictListResponse> GetAll(int? year = null)
+        {
+            string yearString;
+            // If we don't provide a year argument, provide the current max year
+            if (year == null)
+            {
+                StatusHelper statusHelper = new StatusHelper();
+                yearString = statusHelper.GetStatus().MaxSeason.ToString();
+            }
+            else
+            {
+                yearString = year.ToString();
+            }
+
+            var response = await GetAndDeserialize<List<DistrictListModel>>(uri("districts/" + yearString));
+            DistrictListResponse districtListResponse = new DistrictListResponse();
+            districtListResponse.Year = yearString;
+
+            if (districtListResponse.IsSuccessful = response.Item1 != null)
+            {
+                districtListResponse.Data = response.Item1;
+            }
+            else { districtListResponse.Exception = response.Item2; }
+            return districtListResponse;
         }
     }
 

@@ -83,6 +83,12 @@ namespace TBA.Models
             [JsonProperty("picks")]
             public string[] Picks { get; set; }
         }
+
+        [ForeignKey(typeof(DistrictListModel))]
+        public string DistrictListModelPK { get; set; }
+
+        [ManyToOne]
+        public DistrictListModel DistrictListModel { get; set; }
     }
 
     public class EventWebcast

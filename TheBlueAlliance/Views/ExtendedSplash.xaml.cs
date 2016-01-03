@@ -25,6 +25,7 @@ using Windows.Storage;
 using TBA.Caches;
 using System.Reactive.Concurrency;
 using TBA.Common;
+using SQLiteNetExtensions.Extensions;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -117,6 +118,18 @@ namespace TBA.Views
                 TeamHttpClient teamHttpClient = new TeamHttpClient();
                 List<TeamModel> teams = teamHttpClient.GetAll();
                 DataStoreHelper.InsertBulk(teams);
+
+                DataStoreHelper.CreateTable<DistrictListModel>("DistrictListModel");
+                DistrictHttpClient districtHttpClient = new DistrictHttpClient();
+                DistrictListResponse districts = await districtHttpClient.GetAll();
+                foreach(DistrictListModel district in districts.Data)
+                {
+                    district.PK = district.Key + districts.Year;
+                    DataStoreHelper.db.Insert(district);
+                    district.DistrictEvents = DataStoreHelper.db.Query<EventModel>("SELECT * FROM `EventModel` WHERE `EventDistrictString` LIKE ?", district.Name);
+
+                    DataStoreHelper.db.UpdateWithChildren(district);
+                }
 
                 localSettings.Values["FirstLaunch"] = false; // Flip the first launch flag for subsequent runs
             }
