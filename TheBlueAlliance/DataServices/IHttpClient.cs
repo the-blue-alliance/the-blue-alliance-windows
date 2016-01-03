@@ -23,78 +23,76 @@ namespace TBA
         }
     }
 
-    public interface IHttpClient<T>
-    {
-        Task<T> Get(string args);
-    }
-
     public class BaseHttpClient
     {
+        public HttpClient httpClient = HttpClientFactory.GetClient();
         public Uri uri(string args)
         {
             Uri _uri = new Uri(Globals.BaseUrl + args);
             return _uri;
         }
+
+        protected async Task<Tuple<T, Exception>> GetAndDeserialize<T>(Uri uri) where T : class
+        {
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync(uri);
+                response.EnsureSuccessStatusCode();
+                string results = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<T>(results);
+
+                return new Tuple<T, Exception>(result, null);
+            }
+            catch (Exception ex)
+            {
+                return new Tuple<T, Exception>(null, ex);
+            }
+
+        }
     }
 
-    public class EventHttpClient : BaseHttpClient, IHttpClient<EventResponse>
+    public class EventHttpClient : BaseHttpClient
     {
         public async Task<EventResponse> Get(string eventKey)
         {
+            var response = await GetAndDeserialize<EventModel>(uri("event/"+eventKey));
             EventResponse eventsResponse = new EventResponse();
-            HttpClient httpClient = HttpClientFactory.GetClient();
-            eventsResponse.IsSuccessful = false; // Assume the response is bad until proven successful
 
-            // Always catch network exceptions for async methods
-            try
-            {
-                Uri _uri = uri("event/");
-                HttpResponseMessage response = await httpClient.GetAsync(_uri);
-                response.EnsureSuccessStatusCode();
-                string results = await response.Content.ReadAsStringAsync();
-                eventsResponse.Data = JsonConvert.DeserializeObject<EventModel>(results);
-                eventsResponse.IsSuccessful = true;
 
-                return eventsResponse;
-            }
-            catch
+            if (eventsResponse.IsSuccessful = response.Item1 != null)
             {
-                // Details in ex.Message and ex.HResult. 
-                eventsResponse.Exception = new ArgumentException("API Error");
-                return eventsResponse;
+                eventsResponse.Data = response.Item1;
             }
+            else { eventsResponse.Exception = response.Item2; }
+            return eventsResponse;
         }
 
         public async Task<EventListResponse> GetAll(int? year = null)
         {
-            EventListResponse eventListResponse = new EventListResponse();
-            HttpClient httpClient = HttpClientFactory.GetClient();
             string yearString;
-            eventListResponse.IsSuccessful = false; // Assume the response is bad until proven successful
-
-            // Always catch network exceptions for async methods
-            try
+            // If we don't provide a year argument, fallback to the API's default of the current calendar year
+            if (year == null)
             {
-                // If we don't provide a year argument, fallback to the API's default of the current calendar year
-                if(year == null)
-                {
-                    yearString = "";
-                }
-                else
-                {
-                    yearString = year.ToString();
-                }
-
-                Uri _uri = uri("events/" + yearString);
-                HttpResponseMessage response = await httpClient.GetAsync(_uri);
-                response.EnsureSuccessStatusCode();
-                string results = await response.Content.ReadAsStringAsync();
-                eventListResponse.Data = JsonConvert.DeserializeObject<List<EventModel>>(results);
-                eventListResponse.IsSuccessful = true;
-
-                return eventListResponse;
+                yearString = "";
             }
-            catch
+            else
+            {
+                yearString = year.ToString();
+            }
+
+            var response = await GetAndDeserialize<List<EventModel>>(uri("events/" + yearString));
+            EventListResponse eventListResponse = new EventListResponse();
+
+
+            if (eventListResponse.IsSuccessful = response.Item1 != null)
+            {
+                eventListResponse.Data = response.Item1;
+            }
+            else { eventListResponse.Exception = response.Item2; }
+            return eventListResponse;
+        }
+    }
+
             {
                 // Details in ex.Message and ex.HResult. 
                 eventListResponse.Exception = new ArgumentException("API Error");

@@ -20,12 +20,5 @@ namespace TBA.Views.Events
             IEventClient eventClient = new RxEventClient(eventCache, eventHttpClient, scheduler);
             EventViewModel Event = new EventViewModel(eventClient, "2015ohcl");
         }
-
-        //public interface IRatingClient
-        //{
-        //    IObservable<EventModel> GetEvent(string eventKey);
-        //}
-
-        //EventListViewModel EventList { get; set; }
     }
 }
