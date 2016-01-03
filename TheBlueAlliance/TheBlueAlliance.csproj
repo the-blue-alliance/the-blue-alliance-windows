@@ -108,6 +108,7 @@
     <Compile Include="Caches\IEntity.cs" />
     <Compile Include="Caches\IStatusCache.cs" />
     <Compile Include="Caches\IEventCache.cs" />
+    <Compile Include="Caches\ITeamCache.cs" />
     <Compile Include="Common\JsonFileHelper.cs" />
     <Compile Include="Common\StatusHelper.cs" />
     <Compile Include="Controls\NavMenuListview.cs" />
@@ -117,15 +118,18 @@
     <Compile Include="DataServices\DataStoreHelper.cs" />
     <Compile Include="DataServices\IEventClient.cs" />
     <Compile Include="DataServices\IHttpClient.cs" />
-    <Compile Include="DataServices\IStatusClient.cs" />
+    <Compile Include="DataServices\ITeamClient.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\EventResponse.cs" />
     <Compile Include="Models\ModelComparers.cs" />
     <Compile Include="Models\StatusModel.cs" />
     <Compile Include="Models\StatusResponse.cs" />
+    <Compile Include="Models\TeamModel.cs" />
+    <Compile Include="Models\TeamResponse.cs" />
     <Compile Include="NavMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RxEventClient.cs" />
+    <Compile Include="RxTeamClient.cs" />
     <Compile Include="ViewModels\EventListViewModel.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\ViewModelHelpers.cs" />

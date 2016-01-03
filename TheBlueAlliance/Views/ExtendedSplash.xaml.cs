@@ -109,11 +109,15 @@ namespace TBA.Views
                 statusHelper.UpdateStatus();
 
                 DataStoreHelper.CreateTable<EventModel>("EventModel");
-
                 EventHttpClient eventHttpClient = new EventHttpClient();
                 EventListResponse events = await eventHttpClient.GetAll();
                 DataStoreHelper.InsertBulk(events.Data);
                 
+                DataStoreHelper.CreateTable<TeamModel>("TeamModel");
+                TeamHttpClient teamHttpClient = new TeamHttpClient();
+                List<TeamModel> teams = teamHttpClient.GetAll();
+                DataStoreHelper.InsertBulk(teams);
+
                 localSettings.Values["FirstLaunch"] = false; // Flip the first launch flag for subsequent runs
             }
             localSettings.Values["LoadingApp"] = false;

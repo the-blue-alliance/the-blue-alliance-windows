@@ -93,6 +93,58 @@ namespace TBA
         }
     }
 
+    public class TeamHttpClient : BaseHttpClient
+    {
+        public async Task<TeamResponse> Get(string teamKey)
+        {
+            var response = await GetAndDeserialize<TeamModel>(uri("team/" + teamKey));
+            TeamResponse teamResponse = new TeamResponse();
+
+
+            if (teamResponse.IsSuccessful = response.Item1 != null)
+            {
+                teamResponse.Data = response.Item1;
+            }
+            else { teamResponse.Exception = response.Item2; }
+            return teamResponse;
+        }
+
+        public async Task<TeamListResponse> GetPage(int? page = 0)
+        {
+            var response = await GetAndDeserialize<List<TeamModel>>(uri("teams/" + page.ToString()));
+            TeamListResponse teamListResponse = new TeamListResponse();
+
+
+            if (teamListResponse.IsSuccessful = response.Item1 != null)
+            {
+                teamListResponse.Data = response.Item1;
+            }
+            else { teamListResponse.Exception = response.Item2; }
+            return teamListResponse;
+        }
+
+        // This really isn't a part of the httpclient. Consider moving.
+        public List<TeamModel> GetAll()
+        {
+            bool morePages = true;
+            int page = 0;
+            List<TeamModel> _teamList = new List<TeamModel>();
+
+            do
+            {
+                List<TeamModel> pageResults = GetPage(page).Result.Data;
+                if (pageResults.Count == 0)
+                {
+                    morePages = false;
+                }
+                _teamList.AddRange(pageResults);
+                page++;
+            } while (morePages == true);
+
+            return _teamList;
+        }
+    }
+
     public class StatusHttpClient : BaseHttpClient
     {
         public async Task<StatusResponse> Get()

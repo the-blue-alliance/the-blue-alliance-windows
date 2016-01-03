@@ -16,4 +16,18 @@ namespace TBA.Models
             return obj.GetHashCode();
         }
     }
+
+    internal class TeamModelComparer : IEqualityComparer<TeamModel>
+    {
+        public bool Equals(TeamModel x, TeamModel y)
+        {
+            return x.Key == y.Key
+                   && x.Name == y.Name;
+        }
+        public int GetHashCode(TeamModel obj)
+        {
+            Debug.WriteLine(obj.GetHashCode());
+            return obj.GetHashCode();
+        }
+    }
 }
