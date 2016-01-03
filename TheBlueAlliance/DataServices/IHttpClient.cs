@@ -93,11 +93,20 @@ namespace TBA
         }
     }
 
+    public class StatusHttpClient : BaseHttpClient
+    {
+        public async Task<StatusResponse> Get()
+        {
+            var response = await GetAndDeserialize<StatusModel>(uri("status"));
+            StatusResponse statusResponse = new StatusResponse();
+
+
+            if (statusResponse.IsSuccessful = response.Item1 != null)
             {
-                // Details in ex.Message and ex.HResult. 
-                eventListResponse.Exception = new ArgumentException("API Error");
-                return eventListResponse;
+                statusResponse.Data = response.Item1;
             }
+            else { statusResponse.Exception = response.Item2; }
+            return statusResponse;
         }
     }
 }

@@ -22,6 +22,9 @@ using TBA.DataServices;
 using TBA.Models;
 using System.Collections;
 using Windows.Storage;
+using TBA.Caches;
+using System.Reactive.Concurrency;
+using TBA.Common;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -102,6 +105,9 @@ namespace TBA.Views
             // Perform setup if this is the first launch
             if ((bool)localSettings.Values["FirstLaunch"] == true)
             {
+                StatusHelper statusHelper = new StatusHelper();
+                statusHelper.UpdateStatus();
+
                 DataStoreHelper.CreateTable<EventModel>("EventModel");
 
                 EventHttpClient eventHttpClient = new EventHttpClient();

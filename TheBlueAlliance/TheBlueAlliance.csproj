@@ -106,7 +106,10 @@
     </Compile>
     <Compile Include="Caches\CachingExtensions.cs" />
     <Compile Include="Caches\IEntity.cs" />
+    <Compile Include="Caches\IStatusCache.cs" />
     <Compile Include="Caches\IEventCache.cs" />
+    <Compile Include="Common\JsonFileHelper.cs" />
+    <Compile Include="Common\StatusHelper.cs" />
     <Compile Include="Controls\NavMenuListview.cs" />
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
@@ -114,9 +117,12 @@
     <Compile Include="DataServices\DataStoreHelper.cs" />
     <Compile Include="DataServices\IEventClient.cs" />
     <Compile Include="DataServices\IHttpClient.cs" />
+    <Compile Include="DataServices\IStatusClient.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\EventResponse.cs" />
     <Compile Include="Models\ModelComparers.cs" />
+    <Compile Include="Models\StatusModel.cs" />
+    <Compile Include="Models\StatusResponse.cs" />
     <Compile Include="NavMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RxEventClient.cs" />
@@ -197,9 +203,7 @@
       <Name>SQLite for Universal App Platform</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
