@@ -40,10 +40,13 @@ namespace TBA.Views
         private SplashScreen splash; // Variable to hold the splash screen object.
         internal bool dismissed = false; // Variable to track splash screen dismissal status.
         internal AppShell shell;
+        public ExtendedSplashViewModel ViewModel { get; set; }
 
         public ExtendedSplash(SplashScreen splashscreen, bool loadState)
         {
             InitializeComponent();
+            DataContext = this;
+            ViewModel = new ExtendedSplashViewModel();
 
             // Listen for window resize events to reposition the extended splash screen image accordingly.
             // This ensures that the extended splash screen formats properly in response to window resizing.
@@ -82,7 +85,7 @@ namespace TBA.Views
             splashProgressRing.SetValue(Canvas.TopProperty, (splashImageRect.Y + splashImageRect.Height + splashImageRect.Height * 0.1));
         }
 
-                void ExtendedSplash_OnResize(Object sender, WindowSizeChangedEventArgs e)
+        void ExtendedSplash_OnResize(Object sender, WindowSizeChangedEventArgs e)
         {
             // Safely update the extended splash screen image coordinates. This function will be executed when a user resizes the window.
             if (splash != null)
@@ -106,6 +109,7 @@ namespace TBA.Views
             // Perform setup if this is the first launch
             if ((bool)localSettings.Values["FirstLaunch"] == true)
             {
+                ViewModel.LoadingText = "Performing initial setup...";
                 StatusHelper statusHelper = new StatusHelper();
                 statusHelper.UpdateStatus();
 
@@ -133,6 +137,7 @@ namespace TBA.Views
 
                 localSettings.Values["FirstLaunch"] = false; // Flip the first launch flag for subsequent runs
             }
+            ViewModel.LoadingText = "Done!";
             localSettings.Values["LoadingApp"] = false;
         }
 

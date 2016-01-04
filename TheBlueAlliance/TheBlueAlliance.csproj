@@ -109,6 +109,7 @@
     <Compile Include="Caches\IStatusCache.cs" />
     <Compile Include="Caches\IEventCache.cs" />
     <Compile Include="Caches\ITeamCache.cs" />
+    <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\JsonFileHelper.cs" />
     <Compile Include="Common\StatusHelper.cs" />
     <Compile Include="Controls\NavMenuListview.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Views\ExtendedSplash.xaml.cs">
       <DependentUpon>ExtendedSplash.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ExtendedSplashViewModel.cs" />
     <Compile Include="Views\Landing\OffseasonLanding.xaml.cs">
       <DependentUpon>OffseasonLanding.xaml</DependentUpon>
     </Compile>

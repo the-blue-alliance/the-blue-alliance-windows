@@ -11,6 +11,7 @@
         <Canvas>
             <Image x:Name="extendedSplashImage" Source="ms-appx:///Assets/SplashScreen.png" Width="360"/>
             <ProgressRing Name="splashProgressRing" IsActive="True" Width="20" HorizontalAlignment="Center"></ProgressRing>
+            <TextBlock x:Name="splashProgressText" Text="{x:Bind Path=ViewModel.LoadingText, Mode=OneWay}" HorizontalAlignment="Left" Foreground="White"/>
         </Canvas>
     </Grid>
 </Page>
