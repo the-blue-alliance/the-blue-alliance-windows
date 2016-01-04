@@ -64,13 +64,15 @@ namespace TBA
                 this.TogglePaneButton.Focus(FocusState.Programmatic);
             };
 
-            SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
-
-            // If on a phone device that has hardware buttons then we hide the app's back button.
-            if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            SystemNavigationManager.GetForCurrentView().BackRequested += (s, a) =>
             {
-                this.BackButton.Visibility = Visibility.Collapsed;
-            }
+                if (AppFrame.CanGoBack)
+                {
+                    AppFrame.GoBack();
+                    a.Handled = true;
+                }
+            };
 
             NavMenuList.ItemsSource = navlist;
         }
@@ -125,39 +127,6 @@ namespace TBA
                 }
             }
         }
-
-        #region BackRequested Handlers
-
-        private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            bool handled = e.Handled;
-            this.BackRequested(ref handled);
-            e.Handled = handled;
-        }
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            bool ignored = false;
-            this.BackRequested(ref ignored);
-        }
-
-        private void BackRequested(ref bool handled)
-        {
-            // Get a hold of the current frame so that we can inspect the app back stack.
-
-            if (this.AppFrame == null)
-                return;
-
-            // Check to see if this is the top-most page on the app back stack.
-            if (this.AppFrame.CanGoBack && !handled)
-            {
-                // If not, set the event to handled and go back to the previous page in the app.
-                handled = true;
-                this.AppFrame.GoBack();
-            }
-        }
-
-        #endregion
 
         #region Navigation
 
