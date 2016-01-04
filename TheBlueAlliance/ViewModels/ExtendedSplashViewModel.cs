@@ -1,8 +1,6 @@
-﻿using TBA.Common;
-
-namespace TBA.Views
+﻿namespace TBA.ViewModels
 {
-    public class ExtendedSplashViewModel : BindableBase
+    public class ExtendedSplashViewModel : NotificationBase
     {
         public ExtendedSplashViewModel()
         {

@@ -4,13 +4,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace TBA.ViewModels
 {
     public class NotificationBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private SynchronizationContext _synchronizationContext = SynchronizationContext.Current;
 
         // SetField (Name, value); // where there is a data member
         protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] String property
@@ -33,11 +34,21 @@ namespace TBA.ViewModels
             return true;
         }
 
-        protected void RaisePropertyChanged(string property)
+        protected void RaisePropertyChanged([CallerMemberName] string property = null)
         {
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
+                if (_synchronizationContext != null)
+                {
+                    _synchronizationContext.Post((s) =>
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs(property));
+                    }, null);
+                }
+                else
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(property));
+                }
             }
         }
     }
