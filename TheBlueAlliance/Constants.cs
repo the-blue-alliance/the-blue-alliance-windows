@@ -16,5 +16,7 @@ namespace TBA
         }
         public static string AppId = "the-blue-alliance:windows:v" + GetAppVersion();
         public static string BaseUrl = "http://www.thebluealliance.com/api/v2/";
+        public static int MinSeason = 1992;
+        public static int MinDistrictYear = 2009;
     }
 }
