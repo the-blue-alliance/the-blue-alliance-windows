@@ -112,6 +112,7 @@
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\JsonFileHelper.cs" />
     <Compile Include="Common\StatusHelper.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Controls\NavMenuListview.cs" />
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>

@@ -18,7 +18,7 @@ namespace TBA
             if (client == null)
             {
                 client = new HttpClient();
-                client.DefaultRequestHeaders.Add("X-TBA-App-Id", Globals.AppId);
+                client.DefaultRequestHeaders.Add("X-TBA-App-Id", Constants.AppId);
             }
 
             return client;
@@ -30,7 +30,7 @@ namespace TBA
         public HttpClient httpClient = HttpClientFactory.GetClient();
         public Uri uri(string args)
         {
-            Uri _uri = new Uri(Globals.BaseUrl + args);
+            Uri _uri = new Uri(Constants.BaseUrl + args);
             return _uri;
         }
 
