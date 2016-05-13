@@ -1,6 +1,4 @@
 ﻿using Windows.UI.Xaml.Controls;
-using System.Reactive.Concurrency;
-using TBA.Caches;
 using TBA.ViewModels;
 
 namespace TBA.Views.Events
@@ -12,13 +10,9 @@ namespace TBA.Views.Events
     {
         public EventListing()
         {
-            this.InitializeComponent();
-            EventCache eventCache = new EventCache();
-            EventHttpClient eventHttpClient = new EventHttpClient();
-            IScheduler scheduler = Scheduler.Default;
-
-            IEventClient eventClient = new RxEventClient(eventCache, eventHttpClient, scheduler);
-            EventViewModel Event = new EventViewModel(eventClient, "2015ohcl");
+            InitializeComponent();
+            EventListViewModel events = new EventListViewModel();
+            EventList.ItemsSource = events.Data;
         }
     }
 }
