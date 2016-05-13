@@ -11,6 +11,7 @@ namespace TBA.Views.Events
         public EventListing()
         {
             InitializeComponent();
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             EventListViewModel events = new EventListViewModel();
             EventList.ItemsSource = events.Data;
         }
