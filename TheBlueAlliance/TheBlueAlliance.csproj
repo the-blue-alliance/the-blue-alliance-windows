@@ -136,6 +136,9 @@
     <Compile Include="ViewModels\EventListViewModel.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\ViewModelHelpers.cs" />
+    <Compile Include="Views\Events\EventDetail.xaml.cs">
+      <DependentUpon>EventDetail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Events\EventListing.xaml.cs">
       <DependentUpon>EventListing.xaml</DependentUpon>
     </Compile>
@@ -181,6 +184,10 @@
     <Page Include="Styles\Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Events\EventDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Events\EventListing.xaml">
       <Generator>MSBuild:Compile</Generator>

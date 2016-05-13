@@ -32,10 +32,14 @@ namespace TBA.ViewModels
         private void HandleData(EventModel data)
         {
             Name = data.Name;
+            Location = data.Location;
+            StartDate = Convert.ToDateTime(data.StartDate);
         }
 
         public bool IsLoading { get; set; }
         public string Name { get; set; }
+        public string Location { get; set; }
+        public DateTime StartDate { get; set; }
         public string ErrorMessage { get; set; }
     }
 }

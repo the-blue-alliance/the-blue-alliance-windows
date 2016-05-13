@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using TBA.Models;
 using TBA.ViewModels;
 
 namespace TBA.Views.Events
@@ -14,6 +16,13 @@ namespace TBA.Views.Events
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             EventListViewModel events = new EventListViewModel();
             EventList.ItemsSource = events.Data;
+        }
+
+        private void EventList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var item = e.ClickedItem as EventModel;
+            //string k = enter.Text;
+            this.Frame.Navigate(typeof(EventDetail), item.Key.ToString());
         }
     }
 }

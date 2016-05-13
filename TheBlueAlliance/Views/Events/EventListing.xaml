@@ -10,8 +10,8 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock x:Name="textBlock" Margin="10,10,-279,0" TextWrapping="Wrap" Text="Events" VerticalAlignment="Top" FontSize="64" HorizontalAlignment="Left" Width="629" Foreground="#FF000077" FontWeight="Bold"/>
-        <ListView x:Name="EventList" Margin="0,100,0,0" SelectionMode="None">
-            <ListView.ItemTemplate>
+        <GridView x:Name="EventList" Margin="0,100,0,0" SelectionMode="None" IsItemClickEnabled="True" ItemClick="EventList_ItemClick">
+            <GridView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="0,20,0,20">
                         <TextBlock Text="{Binding Name}"></TextBlock>
@@ -19,7 +19,7 @@
                         <TextBlock Text="{Binding StartDate}"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </GridView.ItemTemplate>
+        </GridView>
     </Grid>
 </Page>

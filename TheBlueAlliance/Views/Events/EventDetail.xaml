@@ -1,0 +1,15 @@
+﻿<Page
+    x:Class="TBA.Views.Events.EventDetail"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TBA.Views.Events"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock x:Name="eventName" Margin="10,10,-279,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="64" HorizontalAlignment="Stretch" Foreground="#FF000077" FontWeight="Bold"/>
+        <TextBlock x:Name="eventLocation" Margin="10,100,-279,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="629" />
+        <TextBlock x:Name="eventStartdate" Margin="10,125,-279,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="629" />
+    </Grid>
+</Page>
