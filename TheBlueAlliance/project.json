@@ -1,11 +1,12 @@
 ﻿{
   "dependencies": {
-    "Microsoft.ApplicationInsights": "1.2.3",
+    "DynamicData": "4.7.1.1153",
+    "Microsoft.ApplicationInsights": "2.0.1",
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.2.3",
     "Microsoft.ApplicationInsights.WindowsApps": "1.1.1",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
     "Midgard.CompositeCollection": "1.0.5322.25929",
-    "Newtonsoft.Json": "7.0.1",
+    "Newtonsoft.Json": "8.0.3",
     "rx-main": "2.2.5",
     "sqlite-net": "1.0.8",
     "SQLite.Net-PCL": "3.1.1",
