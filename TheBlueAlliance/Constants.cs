@@ -1,4 +1,6 @@
-﻿using Windows.ApplicationModel;
+using TBA.Caches;
+using TBA.Models;
+using Windows.ApplicationModel;
 
 namespace TBA
 {
@@ -18,5 +20,11 @@ namespace TBA
         public static string BaseUrl = "http://www.thebluealliance.com/api/v2/";
         public static int MinSeason = 1992;
         public static int MinDistrictYear = 2009;
+        public static int MaxSeason()
+        {
+            StatusCache statusCache = new StatusCache();
+            StatusModel cachedStatus = statusCache.GetCachedItem();
+            return cachedStatus.MaxSeason;
+        }
     }
 }
