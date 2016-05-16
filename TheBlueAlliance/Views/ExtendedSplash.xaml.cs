@@ -107,12 +107,14 @@ namespace TBA.Views
 
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
+            // Update the TBA API status
+            StatusHelper statusHelper = new StatusHelper();
+            statusHelper.UpdateStatus();
+
             // Perform setup if this is the first launch
             if ((bool)localSettings.Values["FirstLaunch"] == true)
             {
                 ViewModel.LoadingText = "Performing initial setup...";
-                StatusHelper statusHelper = new StatusHelper();
-                statusHelper.UpdateStatus();
 
                 DataStoreHelper.CreateTable<EventModel>("EventModel");
                 EventHttpClient eventHttpClient = new EventHttpClient();
