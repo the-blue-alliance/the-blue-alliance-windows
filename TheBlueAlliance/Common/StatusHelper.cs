@@ -11,7 +11,7 @@ namespace TBA.Common
 {
     class StatusHelper
     {
-        public void UpdateStatus()
+        public bool UpdateStatus()
         {
             StatusHttpClient httpClient = new StatusHttpClient();
             StatusCache statusCache = new StatusCache();
@@ -19,11 +19,13 @@ namespace TBA.Common
             var statusResponse = httpClient.Get().Result;
             if (!statusResponse.IsSuccessful)
             {
-                throw statusResponse.Exception;
+                // TODO: Supply warning that the API is down.
+                return false;
             }
             else
             {
                 statusCache.Put(statusResponse.Data);
+                return true;
             }
         }
 
