@@ -140,6 +140,18 @@ namespace TBA.Views
 
                 localSettings.Values["FirstLaunch"] = false; // Flip the first launch flag for subsequent runs
             }
+
+            ViewModel.LoadingText = "Setting up the field...";
+            int maxYear = Constants.MaxSeason();
+            int minYear = Constants.MinSeason;
+            
+            List<int> _seasonList = new List<int>();
+            for (int y = maxYear; y >= minYear; y--)
+            {
+                _seasonList.Add(y);
+            }
+            JsonFileHelper.WriteToJsonFile(Constants.SeasonListFile, _seasonList);
+
             ViewModel.LoadingText = "Done!";
             localSettings.Values["LoadingApp"] = false;
         }

@@ -1,4 +1,7 @@
+﻿using System.IO;
+using System.Collections.ObjectModel;
 using TBA.Caches;
+using TBA.Common;
 using TBA.Models;
 using Windows.ApplicationModel;
 
@@ -26,5 +29,11 @@ namespace TBA
             StatusModel cachedStatus = statusCache.GetCachedItem();
             return cachedStatus.MaxSeason;
         }
+        public static ObservableCollection<int> SeasonList()
+        {
+            ObservableCollection<int> _seasonList = JsonFileHelper.ReadFromJsonFile<ObservableCollection<int>>(SeasonListFile);
+            return _seasonList;
+        }
+        public static string SeasonListFile = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "seasonlist.json");
     }
 }
