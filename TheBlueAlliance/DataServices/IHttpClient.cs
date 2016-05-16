@@ -169,8 +169,7 @@ namespace TBA
             // If we don't provide a year argument, provide the current max year
             if (year == null)
             {
-                StatusHelper statusHelper = new StatusHelper();
-                yearString = statusHelper.GetStatus().MaxSeason.ToString();
+                yearString = Constants.MaxSeason().ToString();
             }
             else
             {
